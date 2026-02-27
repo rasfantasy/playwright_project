@@ -131,7 +131,15 @@ test.describe('Тесты главной страницы', () => {
   test('Проверка переключения темы в header', async ({ page }) => {
     await page.getByRole('button', { name: 'Switch between dark and light' }).click();
     await page.getByRole('button', { name: 'Switch between dark and light' }).click();
-
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  ['light', 'dark'].forEach((value) => {
+    test(`Проверка темы страницы ${value}`, async ({ page }) => {
+      await page.evaluate((value) => {
+        document.querySelector('html')?.setAttribute('data-theme', value);
+      }, value);
+      await expect(page).toHaveScreenshot(`pageWidth_${value}_Mode.png`);
+    });
   });
 });
