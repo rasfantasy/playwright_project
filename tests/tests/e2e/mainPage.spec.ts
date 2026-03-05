@@ -1,37 +1,29 @@
-import { test, expect, Page, Locator } from '@playwright/test';
-import { MainPage } from '../../pages/MainPage';
-
-let mainPage: MainPage;
+import { test } from '../../fixtures/mainPage';
 
 test.describe('Тесты главной страницы', () => {
-  test.beforeEach(async ({ page }) => {
-    mainPage = new MainPage(page);
-    await mainPage.openMainPage();
-  });
-
-  test('Проверка отображения элементов', async ({}) => {
+  test('Проверка отображения элементов', async ({ mainPage }) => {
     await mainPage.checkVisiblityElements();
   });
 
-  test('Проверка текста элементов навигации', async ({}) => {
+  test('Проверка текста элементов навигации', async ({ mainPage }) => {
     await mainPage.checkTextElements();
   });
 
-  test('Проверка соответствия ссылок элементов навигации', async ({}) => {
+  test('Проверка соответствия ссылок элементов навигации', async ({ mainPage }) => {
     await mainPage.checkAttributeElements();
   });
 
-  test('Проверка переключения темы в header', async ({}) => {
+  test('Проверка переключения темы в header', async ({ mainPage }) => {
     await mainPage.clickSwitchLightModeIcon();
     await mainPage.checkDataThemeAttributeValue();
   });
 
-  test(`Проверка темы страницы light`, async ({}) => {
+  test(`Проверка темы страницы light`, async ({ mainPage }) => {
     await mainPage.setLightModeLayout();
     await mainPage.checkLightModeLayout();
   });
 
-  test(`Проверка темы страницы dark`, async ({}) => {
+  test(`Проверка темы страницы dark`, async ({ mainPage }) => {
     await mainPage.setDarkModeLayout();
     await mainPage.checkDarkModeLayout();
   });
