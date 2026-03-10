@@ -1,29 +1,29 @@
 import { test } from '../../fixtures/mainPage';
 
 test.describe('Тесты главной страницы', () => {
-  test('Проверка отображения элементов', async ({ mainPage }) => {
+  test('@smoke @regression Проверка отображения элементов', async ({ mainPage }) => {
     await mainPage.checkVisiblityElements();
   });
 
-  test('Проверка текста элементов навигации', async ({ mainPage }) => {
+  test('@regression Проверка текста элементов навигации', async ({ mainPage }) => {
     await mainPage.checkTextElements();
   });
 
-  test('Проверка соответствия ссылок элементов навигации', async ({ mainPage }) => {
+  test('@regression Проверка соответствия ссылок элементов навигации', async ({ mainPage }) => {
     await mainPage.checkAttributeElements();
   });
 
-  test('Проверка переключения темы в header', async ({ mainPage }) => {
+  test('@regression Проверка переключения темы в header', async ({ mainPage }) => {
     await mainPage.clickSwitchLightModeIcon();
     await mainPage.checkDataThemeAttributeValue();
   });
 
-  test(`Проверка темы страницы light`, async ({ mainPage }) => {
+  test(`@regression Проверка темы страницы light`, async ({ mainPage }) => {
     await mainPage.setLightModeLayout();
     await mainPage.checkLightModeLayout();
   });
 
-  test(`Проверка темы страницы dark`, async ({ mainPage }) => {
+  test(`@regression Проверка темы страницы dark`, async ({ mainPage }) => {
     await mainPage.setDarkModeLayout();
     await mainPage.checkDarkModeLayout();
   });

@@ -3,6 +3,7 @@ import { test as base } from '@playwright/test';
 
 // Импортируем класс страницы, с которой будем работать через фикстуру
 import { MainPage } from '../pages/MainPage';
+import { getEnvironment } from '../common/environments';
 
 // Определяем типы кастомных фикстур
 type myFixtures = {
@@ -12,8 +13,9 @@ type myFixtures = {
 // Создаём кастомный test с расширением base и добавляем нашу фикстуру mainPage
 export const test = base.extend<myFixtures>({
   // Определяем фикстуру mainPage
-  mainPage: async ({ page }, use) => {
-    const mainPage = new MainPage(page); // создаём экземпляр MainPage, передавая page
+  mainPage: async ({ page }, use, testInfo) => {
+    const baseURL = getEnvironment(testInfo); // получаем URL по тегам
+    const mainPage = new MainPage(page, baseURL); // создаём экземпляр MainPage, передавая page
     await mainPage.openMainPage(); // сразу открываем главную страницу в браузере
     await use(mainPage); // передаём экземпляр в тест
   },

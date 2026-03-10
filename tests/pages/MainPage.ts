@@ -1,5 +1,4 @@
 import test, { Page, Locator, expect } from '@playwright/test';
-import { AppConstants } from '../common/app-constants';
 
 /**
  * @param {Object} Element
@@ -23,9 +22,11 @@ interface Element {
 export class MainPage {
   readonly page: Page;
   readonly elements: Element[];
+  readonly baseURL: string;
 
-  constructor(page: Page) {
+  constructor(page: Page, baseURL: string) {
     this.page = page;
+    this.baseURL = baseURL;
     this.elements = [
       {
         locator: (page: Page): Locator =>
@@ -113,7 +114,7 @@ export class MainPage {
   }
 
   async openMainPage() {
-    await this.page.goto(AppConstants.BASE_URL);
+    await this.page.goto(this.baseURL);
   }
 
   async checkVisiblityElements() {
