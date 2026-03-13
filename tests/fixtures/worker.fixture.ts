@@ -1,17 +1,29 @@
 import { test as base, request } from '@playwright/test';
+import { environments } from '../common/environments';
+
+type EnvName = keyof typeof environments;
 
 type WorkerFixtures = {
   apiToken: string;
+  env: EnvName;
 };
 
 export const test = base.extend<{}, WorkerFixtures>({
   apiToken: [
-    async ({}, use) => {
+    async ({ env }, use) => {
       /*
       Допустим тут должен быть код который получает app-id
       создаём API контекст
+
+      const apiBaseURL = environments[env].apiURL;
+
       const apiContext = await request.newContext({
-        baseURL: 'https://dummyapi.io/data/v1',
+        baseURL: apiBaseURL,
+      });
+
+
+      const apiContext = await request.newContext({
+        baseURL: apiBaseURL,
       });
       отправляем post с данными
       const response = await apiContext.post('/api/login', {
@@ -33,6 +45,13 @@ export const test = base.extend<{}, WorkerFixtures>({
 
       // но на деле мы сделаем сразу отправку токена
       await use('65c285ba99902e3258b34beb');
+    },
+    { scope: 'worker' },
+  ],
+  env: [
+    async ({}, use) => {
+      const env = (process.env.ENV as EnvName) || 'test';
+      await use(env); // передаём ENV в тесты
     },
     { scope: 'worker' },
   ],

@@ -1,19 +1,29 @@
-export const Environments = {
-  staging: 'https://playwright.dev/', //гипотетический staging
-  production: 'https://playwright.dev/', // гипотетический production
-  testing: 'https://playwright.dev/', // гипотетический testing
-};
+export type EnvName = 'test' | 'staging' | 'prod';
 
-// функция определения среды по тегам
-export function getEnvironment(testInfo: any) {
-  if (testInfo.annotations.some((a: { type: string }) => a.type === 'regression')) {
-    return Environments.production;
-  }
-  if (testInfo.annotations.some((a: { type: string }) => a.type === 'smoke')) {
-    return Environments.staging;
-  }
-  if (testInfo.annotations.some((a: { type: string }) => a.type === 'testing')) {
-    return Environments.testing;
-  }
-  return Environments.staging; // default
-}
+// Объект environments хранит конфигурацию всех окружений проекта.
+// Record означает:
+// - ключи объекта строго соответствуют типу EnvName
+// - значение каждого ключа содержит объект с параметрами окружения
+// В данном случае параметр только один - baseURL (базовый URL приложения).
+export const environments: Record<EnvName, { baseURL: string; apiURL: string }> = {
+  // Конфигурация тестового окружения (обычно используется QA)
+  test: {
+    // baseURL будет автоматически подставляться Playwright
+    // когда используется page.goto('/')
+    baseURL: 'https://playwright.dev', //гипотетический test
+    apiURL: 'https://dummyapi.io/data/v1',
+  },
+
+  // Конфигурация staging среды (предрелизное окружение,
+  // максимально приближенное к production)
+  staging: {
+    baseURL: 'https://playwright.dev', // гипотетический staging
+    apiURL: 'https://dummyapi.io/data/v1',
+  },
+
+  // Конфигурация production среды (боевое окружение)
+  prod: {
+    baseURL: 'https://playwright.dev', // гипотетический production
+    apiURL: 'https://dummyapi.io/data/v1',
+  },
+};

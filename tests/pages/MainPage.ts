@@ -22,11 +22,9 @@ interface Element {
 export class MainPage {
   readonly page: Page;
   readonly elements: Element[];
-  readonly baseURL: string;
 
-  constructor(page: Page, baseURL: string) {
+  constructor(page: Page) {
     this.page = page;
-    this.baseURL = baseURL;
     this.elements = [
       {
         locator: (page: Page): Locator =>
@@ -114,7 +112,7 @@ export class MainPage {
   }
 
   async openMainPage() {
-    await this.page.goto(this.baseURL);
+    await this.page.goto('/');
   }
 
   async checkVisiblityElements() {
