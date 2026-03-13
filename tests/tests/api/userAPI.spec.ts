@@ -1,20 +1,11 @@
 import { environments } from '../../common/environments';
 import { test, expect } from '../../fixtures/worker.fixture';
 
-test('User Controller test API', async ({ apiToken, request, env }) => {
-  console.log(`ENV: ${env}`);
-
-  // baseURL и другие параметры берём из environments.ts
-  console.log(`Base URL: ${environments[env].baseURL}`);
-  console.log(`API URL: ${environments[env].apiURL}`);
-
+test('User Controller test API', async ({ apiClient }) => {
   let userId: string;
 
   await test.step('Create user step', async ({}) => {
-    const response = await request.post(`${environments[env].apiURL}/user/create`, {
-      headers: {
-        'app-id': apiToken,
-      },
+    const response = await apiClient.post(`user/create`, {
       data: {
         firstName: 'Ras',
         lastName: 'Fantasy',
@@ -27,11 +18,7 @@ test('User Controller test API', async ({ apiToken, request, env }) => {
   });
 
   await test.step('Get user by ID step', async () => {
-    const response = await request.get(`${environments[env].apiURL}/user/${userId}`, {
-      headers: {
-        'app-id': apiToken,
-      },
-    });
+    const response = await apiClient.get(`user/${userId}`);
     expect(response.status()).toBe(200);
     const body = await response.json();
     expect(body.firstName).toEqual('Ras');
@@ -40,10 +27,7 @@ test('User Controller test API', async ({ apiToken, request, env }) => {
   });
 
   await test.step('Update user step', async () => {
-    const response = await request.put(`${environments[env].apiURL}/user/${userId}`, {
-      headers: {
-        'app-id': apiToken,
-      },
+    const response = await apiClient.put(`user/${userId}`, {
       data: {
         firstName: 'Ras2',
         lastName: 'Fantasy2',
@@ -57,20 +41,12 @@ test('User Controller test API', async ({ apiToken, request, env }) => {
   });
 
   await test.step('Delete user step', async () => {
-    const response = await request.delete(`${environments[env].apiURL}/user/${userId}`, {
-      headers: {
-        'app-id': apiToken,
-      },
-    });
+    const response = await apiClient.delete(`user/${userId}`);
     expect(response.status()).toBe(200);
   });
 
   await test.step('Verify user is deleted step', async () => {
-    const response = await request.get(`${environments[env].apiURL}/user/${userId}`, {
-      headers: {
-        'app-id': apiToken,
-      },
-    });
+    const response = await apiClient.get(`user/${userId}`);
     expect(response.status()).toBe(404);
   });
 });

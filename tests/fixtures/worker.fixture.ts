@@ -1,57 +1,48 @@
-import { test as base, request } from '@playwright/test';
+import { APIRequestContext, test as base, request } from '@playwright/test';
 import { environments } from '../common/environments';
 
-type EnvName = keyof typeof environments;
-
 type WorkerFixtures = {
+  env: keyof typeof environments;
   apiToken: string;
-  env: EnvName;
+  apiClient: APIRequestContext;
 };
 
 export const test = base.extend<{}, WorkerFixtures>({
+  env: [
+    async ({}, use) => {
+      const selectedEnv = (process.env.ENV as keyof typeof environments) || 'test';
+      await use(selectedEnv);
+    },
+    { scope: 'worker' },
+  ],
   apiToken: [
-    async ({ env }, use) => {
-      /*
-      Допустим тут должен быть код который получает app-id
-      создаём API контекст
+    async ({ apiClient }, use) => {
+      /*  //Допустим тут должен быть код который получает app-id
+      //создаём API контекст
 
-      const apiBaseURL = environments[env].apiURL;
-
-      const apiContext = await request.newContext({
-        baseURL: apiBaseURL,
-      });
-
-
-      const apiContext = await request.newContext({
-        baseURL: apiBaseURL,
-      });
-      отправляем post с данными
-      const response = await apiContext.post('/api/login', {
+      const response = await apiClient.post(`/api/login`, {
         data: {
           email: 'test@test.com',
           password: '123456',
         },
       });
-
-      ждём ответа и парсим в  json
       const body = await response.json();
-
-      получаем токен и отправляем
-      await use(body.token);
-      
-      закрываем контекст
-      await apiContext.dispose();
-      */
+      await use(body.token);*/
 
       // но на деле мы сделаем сразу отправку токена
       await use('65c285ba99902e3258b34beb');
     },
     { scope: 'worker' },
   ],
-  env: [
-    async ({}, use) => {
-      const env = (process.env.ENV as EnvName) || 'test';
-      await use(env); // передаём ENV в тесты
+  apiClient: [
+    async ({ apiToken, env }, use) => {
+      const apiURL = environments[env].apiURL; // берём API endpoint
+      const client = await request.newContext({
+        baseURL: apiURL,
+        extraHTTPHeaders: { 'app-id': apiToken },
+      });
+      await use(client);
+      await client.dispose();
     },
     { scope: 'worker' },
   ],
