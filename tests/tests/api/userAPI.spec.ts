@@ -3,7 +3,7 @@ import { createTestUser } from '../../factories/user.factory';
 import { createUser, getUser, updateUser, deleteUser } from '../../services/user.service';
 import { generateRandomFirstName, generateRandomLastName } from '../../helpers/name.helper';
 
-test('User Controller test API', async ({ apiClient }) => {
+test('@api User Controller test API', async ({ apiClient }) => {
   let userId: string;
   const user = createTestUser();
   const updatedUser = {
