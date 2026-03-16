@@ -16,7 +16,7 @@ export const test = base.extend<{}, WorkerFixtures>({
     { scope: 'worker' },
   ],
   apiToken: [
-    async ({ apiClient }, use) => {
+    async ({}, use) => {
       /*  //Допустим тут должен быть код который получает app-id
       //создаём API контекст
 

@@ -1,52 +1,44 @@
-import { environments } from '../../common/environments';
 import { test, expect } from '../../fixtures/worker.fixture';
+import { createTestUser } from '../../factories/user.factory';
+import { createUser, getUser, updateUser, deleteUser } from '../../services/user.service';
+import { generateRandomFirstName, generateRandomLastName } from '../../helpers/name.helper';
 
 test('User Controller test API', async ({ apiClient }) => {
   let userId: string;
+  const user = createTestUser();
+  const updatedUser = {
+    ...user,
+    firstName: `Updated-${generateRandomFirstName()}`,
+    lastName: `Updated-${generateRandomLastName()}`,
+  };
 
   await test.step('Create user step', async ({}) => {
-    const response = await apiClient.post(`user/create`, {
-      data: {
-        firstName: 'Ras',
-        lastName: 'Fantasy',
-        email: 'rasfantasy@playwright-test.com',
-      },
-    });
+    const response = await createUser(apiClient, user);
     expect(response.status()).toBe(200);
-    const body = await response.json();
-    userId = body.id;
+    userId = (await response.json()).id;
   });
 
   await test.step('Get user by ID step', async () => {
-    const response = await apiClient.get(`user/${userId}`);
+    const response = await getUser(apiClient, userId);
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.firstName).toEqual('Ras');
-    expect(body.lastName).toEqual('Fantasy');
-    expect(body.email).toEqual('rasfantasy@playwright-test.com');
+    expect(body).toMatchObject(user);
   });
 
   await test.step('Update user step', async () => {
-    const response = await apiClient.put(`user/${userId}`, {
-      data: {
-        firstName: 'Ras2',
-        lastName: 'Fantasy2',
-      },
-    });
+    const response = await updateUser(apiClient, userId, updatedUser);
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.firstName).toEqual('Ras2');
-    expect(body.lastName).toEqual('Fantasy2');
-    expect(body.email).toEqual('rasfantasy@playwright-test.com');
+    expect(body).toMatchObject(updatedUser);
   });
 
   await test.step('Delete user step', async () => {
-    const response = await apiClient.delete(`user/${userId}`);
+    const response = await deleteUser(apiClient, userId);
     expect(response.status()).toBe(200);
   });
 
   await test.step('Verify user is deleted step', async () => {
-    const response = await apiClient.get(`user/${userId}`);
+    const response = await getUser(apiClient, userId);
     expect(response.status()).toBe(404);
   });
 });
