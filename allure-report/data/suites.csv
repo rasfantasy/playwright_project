@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2400","@regression Проверка темы страницы dark","chromium","2026-03-31","failed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
+"","4508","@regression Проверка текста элементов навигации","chromium","2026-03-31","passed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
+"","5049","@regression Проверка темы страницы light","chromium","2026-03-31","failed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
+"","4380","@regression Проверка соответствия ссылок элементов навигации","chromium","2026-03-31","passed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
+"","2013","@api User Controller test API","chromium","2026-03-31","passed","2026-03-31","","tests\api\userAPI.spec.ts","",""
+"","4532","@smoke @regression Проверка отображения элементов","chromium","2026-03-31","passed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
+"","4548","@regression Проверка переключения темы в header","chromium","2026-03-31","passed","2026-03-31","Тесты главной страницы","tests\e2e\mainPage.spec.ts","",""
