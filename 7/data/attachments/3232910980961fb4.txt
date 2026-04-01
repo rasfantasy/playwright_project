@@ -1,0 +1,1 @@
+A snapshot doesn't exist at /home/runner/work/playwright_project/playwright_project/tests/tests/e2e/mainPage.spec.ts-snapshots/pageWidth-Dark-Mode-chromium-linux.png, writing actual.
