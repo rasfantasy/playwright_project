@@ -1,19 +1,31 @@
 {
-  "name": "project1",
+  "name": "playwright-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
+  "description": "Playwright + TypeScript: UI, API и визуальные тесты с CI/CD и Allure",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:api": "playwright test --grep @api",
+    "test:ui": "playwright test --ui",
+    "test:docker": "node scripts/docker-run.js",
+    "snapshots:update": "node scripts/docker-run.js --grep @visual --update-snapshots",
+    "typecheck": "tsc --noEmit",
+    "report": "playwright show-report",
+    "allure:serve": "allure serve allure-results"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "1.58.2",
     "@types/node": "^25.3.0",
-    "allure-playwright": "3.6.0"
+    "allure-playwright": "3.6.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "allure-commandline": "^2.38.1"
-  }
+  },
+  "private": true
 }

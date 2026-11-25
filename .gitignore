@@ -10,3 +10,5 @@ node_modules/
 allure-results/
 allure-report/
 allure-history/
+# Локальные архивы отчётов
+*.zip
