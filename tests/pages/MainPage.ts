@@ -37,7 +37,7 @@ export class MainPage {
         },
       },
       {
-        locator: (page: Page): Locator => page.getByRole('link', { name: 'Docs' }),
+        locator: (page: Page): Locator => page.getByRole('link', { name: 'Docs', exact: true }),
         name: 'Docs link',
         text: 'Docs',
         attribute: {
@@ -46,7 +46,25 @@ export class MainPage {
         },
       },
       {
-        locator: (page: Page): Locator => page.getByRole('link', { name: 'API' }),
+        locator: (page: Page): Locator => page.getByRole('link', { name: 'MCP', exact: true }),
+        name: 'MCP link',
+        text: 'MCP',
+        attribute: {
+          type: 'href',
+          value: '/mcp/introduction',
+        },
+      },
+      {
+        locator: (page: Page): Locator => page.getByRole('link', { name: 'CLI', exact: true }),
+        name: 'CLI link',
+        text: 'CLI',
+        attribute: {
+          type: 'href',
+          value: '/agent-cli/introduction',
+        },
+      },
+      {
+        locator: (page: Page): Locator => page.getByRole('link', { name: 'API', exact: true }),
         name: 'API link',
         text: 'API',
         attribute: {
@@ -58,15 +76,6 @@ export class MainPage {
         locator: (page: Page): Locator => page.getByRole('button', { name: 'Node.js' }),
         name: 'Node.js button',
         text: 'Node.js',
-      },
-      {
-        locator: (page: Page): Locator => page.getByRole('link', { name: 'Community' }),
-        name: 'Community link',
-        text: 'Community',
-        attribute: {
-          type: 'href',
-          value: '/community/welcome',
-        },
       },
       {
         locator: (page: Page): Locator => page.getByRole('link', { name: 'GitHub repository' }),
@@ -87,17 +96,16 @@ export class MainPage {
       {
         locator: (page: Page): Locator =>
           page.getByRole('button', { name: 'Switch between dark and light' }),
-        name: 'Theme Switck button',
+        name: 'Theme Switch button',
       },
       {
-        locator: (page: Page): Locator => page.getByRole('button', { name: 'Search (Ctrl+K)' }),
+        locator: (page: Page): Locator => page.getByRole('button', { name: /^Search/ }),
         name: 'Search button',
       },
       {
-        locator: (page: Page): Locator =>
-          page.getByRole('heading', { name: 'Playwright enables reliable' }),
+        locator: (page: Page): Locator => page.getByRole('heading', { level: 1 }),
         name: 'Title',
-        text: 'Playwright enables reliable end-to-end testing for modern web apps.',
+        text: 'Playwright enables reliable web automation for testing, scripting, and AI agents.',
       },
       {
         locator: (page: Page): Locator => page.getByRole('link', { name: 'Get started' }),

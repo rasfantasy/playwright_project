@@ -1,21 +1,22 @@
 import { test, expect } from '../../fixtures/worker.fixture';
 import { createTestUser } from '../../factories/user.factory';
 import { createUser, getUser, updateUser, deleteUser } from '../../services/user.service';
+import { User, UserResponse } from '../../models/user.model';
 import { generateRandomFirstName, generateRandomLastName } from '../../helpers/name.helper';
 
 test('@api User Controller test API', async ({ apiClient }) => {
   let userId: string;
   const user = createTestUser();
-  const updatedUser = {
+  const updatedUser: User = {
     ...user,
     firstName: `Updated-${generateRandomFirstName()}`,
     lastName: `Updated-${generateRandomLastName()}`,
   };
 
-  await test.step('Create user step', async ({}) => {
+  await test.step('Create user step', async () => {
     const response = await createUser(apiClient, user);
     expect(response.status()).toBe(200);
-    userId = (await response.json()).id;
+    userId = ((await response.json()) as UserResponse).id;
   });
 
   await test.step('Get user by ID step', async () => {

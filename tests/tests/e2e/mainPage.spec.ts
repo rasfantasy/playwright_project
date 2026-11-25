@@ -18,12 +18,12 @@ test.describe('Тесты главной страницы', () => {
     await mainPage.checkDataThemeAttributeValue();
   });
 
-  test(`@regression Проверка темы страницы light`, async ({ mainPage }) => {
+  test(`@regression @visual Проверка темы страницы light`, async ({ mainPage }) => {
     await mainPage.setLightModeLayout();
     await mainPage.checkLightModeLayout();
   });
 
-  test(`@regression Проверка темы страницы dark`, async ({ mainPage }) => {
+  test(`@regression @visual Проверка темы страницы dark`, async ({ mainPage }) => {
     await mainPage.setDarkModeLayout();
     await mainPage.checkDarkModeLayout();
   });
